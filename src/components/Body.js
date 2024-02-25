@@ -1,20 +1,35 @@
-import React from 'react'
-import Search from './Search'
-import TopDevelopers from './TopDevelopers'
-import LatestProjects from './LatestProjects'
-import ProjectsByDomain from './ProjectsByDomain'
-import PopularProjects from './PopularProjects'
+import React from "react";
+import Browse from "./Browse";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Domains from "./Domains";
+import LatestProjectsPage from "./LatestProjectsPage";
+import SignUpPage from "./SignUpPage";
 
 const Body = () => {
-  return (
-    <div className='px-4'>
-        <Search />
-        <TopDevelopers />
-        <LatestProjects />
-        <ProjectsByDomain />
-        <PopularProjects />
-    </div>
-  )
-}
+  const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <Browse />,
+    },
+    {
+      path: "/domains",
+      element: <Domains />,
+    },
+    {
+      path: "/latestprojects",
+      element: <LatestProjectsPage />
+    },
+    {
+      path: "/signup",
+      element: <SignUpPage />
+    }
+  ]);
 
-export default Body
+  return (
+    <div>
+      <RouterProvider router={appRouter} />
+    </div>
+  );
+};
+
+export default Body;

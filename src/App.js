@@ -1,9 +1,9 @@
-import Main from "./components/Main";
+import Body from "./components/Body";
 
 
 function App() {
   return (
-      <Main />
+      <Body />
   );
 }
 
