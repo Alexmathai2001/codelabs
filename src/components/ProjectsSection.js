@@ -1,11 +1,11 @@
 import React from 'react'
 import ProjectCard from './ProjectCard'
 
-const PopularProjects = () => {
+const ProjectsSection = ({title}) => {
   return (
-    <div className='mt-1'>
+    <div>
         <div className='w-full py-1  text-sm flex justify-between'>
-            <p >Popular Projects</p>
+            <p >{title}</p>
             <a className='text-blue-500' href='www.sample.com'>more</a>
         </div>
         <ProjectCard />
@@ -14,4 +14,4 @@ const PopularProjects = () => {
   )
 }
 
-export default PopularProjects
+export default ProjectsSection

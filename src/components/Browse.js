@@ -1,9 +1,8 @@
 import React from 'react'
 import Search from './Search'
 import TopDevelopers from './TopDevelopers'
-import LatestProjects from './LatestProjectsSection'
+import ProjectsSection from './ProjectsSection'
 import ProjectsByDomain from './ProjectsByDomain'
-import PopularProjects from './PopularProjects'
 import Header from './Header'
 
 const Browse = () => {
@@ -12,9 +11,9 @@ const Browse = () => {
         <Header />
         <Search />
         <TopDevelopers />
-        <LatestProjects />
+        <ProjectsSection title={"Latest Project"}/>
         <ProjectsByDomain />
-        <PopularProjects />
+        <ProjectsSection title={"Popular Project"}/>
     </div>
   )
 }

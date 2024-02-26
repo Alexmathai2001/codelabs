@@ -4,6 +4,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Domains from "./Domains";
 import LatestProjectsPage from "./LatestProjectsPage";
 import SignUpPage from "./SignUpPage";
+import SignInPage from "./SignInPage";
+import ForgotPassword from "./ForgotPassword";
+import Description from "./Description";
+import DeveloperProfile from "./DeveloperProfile";
+import Myprofile from "./Myprofile";
+import EditProfile from "./EditProfile";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -22,6 +28,30 @@ const Body = () => {
     {
       path: "/signup",
       element: <SignUpPage />
+    },
+    {
+      path : '/signin',
+      element : <SignInPage />
+    },
+    {
+      path : '/forgotpassword',
+      element : <ForgotPassword />
+    },
+    {
+      path : '/description',
+      element : <Description />
+    },
+    {
+      path : '/profile',
+      element : <DeveloperProfile />
+    },
+    {
+      path : '/myprofile',
+      element : <Myprofile />
+    },
+    {
+      path : '/editprofile',
+      element : <EditProfile />
     }
   ]);
 

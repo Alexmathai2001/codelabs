@@ -1,6 +1,6 @@
 import React from 'react'
 import SubHeader from './SubHeader'
-import LatestProjects from './LatestProjectsSection'
+import ProjectsSection from './ProjectsSection'
 
 const LatestProjectsPage = () => {
   return (
@@ -14,7 +14,7 @@ const LatestProjectsPage = () => {
                     <p>Sort</p>
                 </button>
             </div>
-            <LatestProjects />
+            <ProjectsSection title={"Latest Projects"} />
 
         </div>
     </div>
