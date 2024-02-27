@@ -11,7 +11,6 @@ const Browse = () => {
     <div className='px-4'>
         <Header />
         <Search />
-        <RichTextEditor />
         <TopDevelopers />
         <ProjectsSection title={"Latest Project"}/>
         <ProjectsByDomain />

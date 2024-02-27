@@ -1,5 +1,6 @@
 import React from "react";
 import SubHeader from "./SubHeader";
+import RichTextEditor from "./RichTextEditor";
 
 const AddProject = () => {
   return (
@@ -63,11 +64,7 @@ const AddProject = () => {
             </div>
           </div>
           <label>Features</label>
-          <textarea
-            rows={6}
-            placeholder="Enter features"
-            className="border-[1px] border-gray-400 rounded-md p-3 w-full"
-          ></textarea>
+          <RichTextEditor />
           <label>Frameworks/Libraries Used</label>
           <input
             type="text"
