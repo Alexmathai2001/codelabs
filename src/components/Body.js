@@ -10,6 +10,7 @@ import Description from "./Description";
 import DeveloperProfile from "./DeveloperProfile";
 import Myprofile from "./Myprofile";
 import EditProfile from "./EditProfile";
+import AddProject from "./AddProject";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -52,6 +53,10 @@ const Body = () => {
     {
       path : '/editprofile',
       element : <EditProfile />
+    },
+    {
+      path : '/addproject',
+      element : <AddProject />
     }
   ]);
 
