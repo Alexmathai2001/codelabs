@@ -3,6 +3,8 @@ import SubHeader from "./SubHeader";
 import RichTextEditor from "./RichTextEditor";
 
 const AddProject = () => {
+
+
   return (
     <div>
       <SubHeader title={"Add Project"} />
