@@ -5,8 +5,7 @@ const projectController = require('../controller/projectController')
 
 
 
-router.get('/addproject',projectController.addproject)
-router.post('/addproject',projectController.addproject)
+router.post('/addproject',projectController.postaddproject)
 
 
 

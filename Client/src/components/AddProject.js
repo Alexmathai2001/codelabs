@@ -14,23 +14,42 @@ const AddProject = () => {
     framework: "",
     database: "",
     screenshots: "",
+    coverPhoto : "",
+    repoLink : ""
   });
   const [value, setValue] = useState("");
   const [imageArray, setImageArray] = useState("");
   const tempImageArray = [];
-  const [uploadimg, setUploadimg] = useState([]);
 
   const formDataToSend = new FormData();
 
+  const handleCoverPhoto = (event) => {
+    const coverPhotoFile = event.target.files[0]; // Get the first file
+  
+    if (coverPhotoFile instanceof Blob) {
+      const reader = new FileReader();
+  
+      reader.onload = () => {
+        if (reader.readyState === FileReader.DONE) {
+          setImageArray([reader.result]); // Set the image array with the cover photo data
+          setFormData({ ...formData, coverPhoto: reader.result }); // Set formData with the cover photo data
+        }
+      };
+  
+      // Read the cover photo file
+      reader.readAsDataURL(coverPhotoFile);
+    } else {
+      console.error("Invalid file:", coverPhotoFile);
+    }
+  };
+  
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
-    setUploadimg([]);
     files.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          //setUploadimg((oldImages) => [...oldImages, reader.result]);
           tempImageArray.push(reader.result);
           if (tempImageArray.length === files.length) {
             setImageArray(tempImageArray);
@@ -57,19 +76,8 @@ const AddProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create FormData object
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("category", formData.category);
-    formDataToSend.append("livelink", formData.livelink);
-    formDataToSend.append("image", uploadimg);
-    console.log("form data is " + formDataToSend);
-
     try {
-      const response = await axios.post("/addproject", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post("/addproject", formData);
 
       console.log(response); // Check response data for debugging
 
@@ -110,6 +118,14 @@ const AddProject = () => {
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
             onChange={handleChange}
           ></input>
+          <label>Repo link</label>
+          <input
+            type="text"
+            name="repoLink"
+            placeholder="Eg : www.sample.com"
+            className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
+            onChange={handleChange}
+          ></input>
           <label>Overview</label>
           <textarea
             name="description"
@@ -138,6 +154,7 @@ const AddProject = () => {
             <div className="relative">
               <input
                 type="file"
+                onChange={handleCoverPhoto}
                 accept="image/*"
                 className="absolute inset-0 w-full h-full opacity-0"
                 aria-hidden="true"
@@ -174,21 +191,6 @@ const AddProject = () => {
             placeholder="Eg : MongoDB , NoSQL"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
           ></input>
-          <div className="relative my-3">
-            <input
-              type="file"
-              accept=".zip"
-              className="absolute inset-0 w-full h-full opacity-0"
-              aria-hidden="true"
-            />
-
-            <button
-              type="button"
-              className="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Upload project zip
-            </button>
-          </div>
           <button
             type="submit"
             className="mt-2 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md"
