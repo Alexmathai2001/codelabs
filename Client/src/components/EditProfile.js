@@ -4,21 +4,6 @@ import axios from "axios";
 
 const EditProfile = () => {
 
-  const [fullName,setFullname] = useState()
-
-  const Submit = async (e) => {
-    e.preventDefault()
-
-    try {
-      
-      await axios.post('/editprofile',{fullName})
-      
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-
 
   return (
     <div>
@@ -49,12 +34,12 @@ const EditProfile = () => {
         </div>
         <form>
             <label className="font-light my-2">Full Name</label>
-            <input type="text" onChange={(e) => {setFullname(e.target.value)}} className="w-full border-[1px] border-gray-400 rounded-md mb-2 py-2 px-2"></input>
+            <input type="text" className="w-full border-[1px] border-gray-400 rounded-md mb-2 py-2 px-2"></input>
             <label className=" font-light">Headline</label>
             <input type="text" placeholder="Eg : Web Developer" className="w-full border-[1px] border-gray-400 rounded-md mb-2 py-2 px-2"></input>
             <label className=" font-light">Bio</label>
             <textarea rows={10} placeholder="Eg : I'm a passionate web developer and designer with 7 years of experience crafting engaging and user-friendly websites. " className="border-[1px] border-gray-400 rounded-md w-full p-3"></textarea>
-        <button onClick={Submit(e)} className="mt-16 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md">Save</button>
+        <button className="mt-16 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md">Save</button>
         </form>
       </div>
     </div>

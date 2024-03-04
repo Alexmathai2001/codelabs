@@ -1,32 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 import SubHeader from "./SubHeader";
 import RichTextEditor from "./RichTextEditor";
+import axios from "axios"
 
 const AddProject = () => {
 
+    const [formData, setFormData] = useState({
+      title: '',
+      category: '',
+      livelink: ''
+    });
+    const [uploadimg,setUploadimg] = useState(null)
+
+
+    const formDataToSend = new FormData();
+
+    const handleImageChange = (event) => {
+      console.log(event.target.files);
+      setUploadimg(event.target.files)
+       console.log("hello :"+ uploadimg);
+    };
+  
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+      formDataToSend.append(e.target.name, e.target.value); // Append the form data
+    };
+    
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      // Create FormData object
+      formDataToSend.append('title', formData.title);
+      formDataToSend.append('category', formData.category);
+      formDataToSend.append('livelink', formData.livelink);
+      formDataToSend.append('image', uploadimg);
+      console.log("form data is "+formDataToSend);
+  
+      try {
+          const response = await axios.post('/addproject', formDataToSend, {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          });
+  
+          console.log(response); // Check response data for debugging
+  
+          if (response.status === 200) {
+              console.log('Form data submitted successfully');
+          }
+      } catch (error) {
+          console.error('Error submitting form data:', error);
+      }
+  };
+  
+  
 
   return (
     <div>
       <SubHeader title={"Add Project"} />
       <div className="py-2 px-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Title</label>
           <input
             type="text"
+            name="title"
             placeholder="Eg : E-rental WebApp"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
+            onChange={handleChange}
           ></input>
           <label>Category</label>
           <input
             type="text"
+            name="category"
             placeholder="Eg : Full stack"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
+            onChange={handleChange}
           ></input>
           <label>Live link</label>
           <input
             type="text"
+            name="livelink"
             placeholder="Eg : www.sample.com"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
+            onChange={handleChange}
           ></input>
           <label>Overview</label>
           <textarea
@@ -35,12 +92,13 @@ const AddProject = () => {
             className="border-[1px] border-gray-400 rounded-md p-3 w-full"
           ></textarea>
           <div className="flex justify-around my-3">
-            <div class="relative">
+            <div className="relative">
               <input
                 type="file"
                 accept="image/*"
+                onChange={handleImageChange}
                 multiple
-                class="absolute inset-0 w-full h-full opacity-0"
+                className="absolute inset-0 w-full h-full opacity-0"
                 aria-hidden="true"
               ></input>
               <button
@@ -50,7 +108,7 @@ const AddProject = () => {
                 Upload screenshots
               </button>
             </div>
-            <div class="relative">
+            <div className="relative">
               <input
                 type="file"
                 accept="image/*"
@@ -59,7 +117,7 @@ const AddProject = () => {
               ></input>
               <button
                 type="button"
-                class="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 Upload cover image
               </button>
@@ -79,7 +137,7 @@ const AddProject = () => {
             placeholder="Eg : MongoDB , NoSQL"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
           ></input>
-          <div class="relative my-3">
+          <div className="relative my-3">
             <input
               type="file"
               accept=".zip"
@@ -89,12 +147,12 @@ const AddProject = () => {
 
             <button
               type="button"
-              class="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Upload project zip
             </button>
           </div>
-          <button className="mt-2 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md">
+          <button type="submit" className="mt-2 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md">
             Submit
           </button>
         </form>
