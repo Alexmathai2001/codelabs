@@ -5,7 +5,7 @@
   "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node App",
+    "start": "nodemon App",
     "dev": "nodemon App"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "firebase": "^10.8.1",
     "mongoose": "^8.2.0"
   },
   "devDependencies": {

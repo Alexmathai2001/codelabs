@@ -4,7 +4,6 @@ import TopDevelopers from './TopDevelopers'
 import ProjectsSection from './ProjectsSection'
 import ProjectsByDomain from './ProjectsByDomain'
 import Header from './Header'
-import RichTextEditor from './RichTextEditor'
 
 const Browse = () => {
   return (

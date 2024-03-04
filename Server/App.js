@@ -1,17 +1,20 @@
 const express = require('express')
 const connectdb = require("./connection")
 const app = express()
+const cors = require('cors')
+const approuter = require('./routes/approute')
+
+app.use(express.json())
+app.use(cors())
+app.use(express.urlencoded({ extended : true }))
+app.use('/',approuter)
 
 connectdb()
 
-app.get("/",(req,res) => {
-    res.json({"names" : ["alex","arshad","ausni"]})
-})
 
-app.post('/editprofile',(req,res) => {
 
-})
 
-app.listen(5000,() =>{
+
+app.listen(4000,() =>{
     console.log("server started at port 5000");
 })

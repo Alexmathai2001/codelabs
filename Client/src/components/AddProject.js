@@ -1,66 +1,91 @@
 import React, { useState } from "react";
 import SubHeader from "./SubHeader";
-import RichTextEditor from "./RichTextEditor";
-import axios from "axios"
+import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const AddProject = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    livelink: "",
+    features: "",
+    description: "",
+    framework: "",
+    database: "",
+    screenshots: "",
+  });
+  const [value, setValue] = useState("");
+  const [imageArray, setImageArray] = useState("");
+  const tempImageArray = [];
+  const [uploadimg, setUploadimg] = useState([]);
 
-    const [formData, setFormData] = useState({
-      title: '',
-      category: '',
-      livelink: ''
-    });
-    const [uploadimg,setUploadimg] = useState(null)
+  const formDataToSend = new FormData();
 
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files);
+    setUploadimg([]);
+    files.forEach((file) => {
+      const reader = new FileReader();
 
-    const formDataToSend = new FormData();
-
-    const handleImageChange = (event) => {
-      console.log(event.target.files);
-      setUploadimg(event.target.files)
-       console.log("hello :"+ uploadimg);
-    };
-  
-    const handleChange = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-      formDataToSend.append(e.target.name, e.target.value); // Append the form data
-    };
-    
-
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      // Create FormData object
-      formDataToSend.append('title', formData.title);
-      formDataToSend.append('category', formData.category);
-      formDataToSend.append('livelink', formData.livelink);
-      formDataToSend.append('image', uploadimg);
-      console.log("form data is "+formDataToSend);
-  
-      try {
-          const response = await axios.post('/addproject', formDataToSend, {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-          });
-  
-          console.log(response); // Check response data for debugging
-  
-          if (response.status === 200) {
-              console.log('Form data submitted successfully');
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          //setUploadimg((oldImages) => [...oldImages, reader.result]);
+          tempImageArray.push(reader.result);
+          if (tempImageArray.length === files.length) {
+            setImageArray(tempImageArray);
+            setFormData({ ...formData, screenshots: tempImageArray });
           }
-      } catch (error) {
-          console.error('Error submitting form data:', error);
-      }
+        }
+      };
+      reader.readAsDataURL(file);
+
+      console.log(imageArray);
+    });
   };
-  
-  
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
+  };
+  const handleFeatureChange = (content) => {
+    setValue(content);
+    setFormData({ ...formData, features: content });
+    console.log(formData);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Create FormData object
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("livelink", formData.livelink);
+    formDataToSend.append("image", uploadimg);
+    console.log("form data is " + formDataToSend);
+
+    try {
+      const response = await axios.post("/addproject", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(response); // Check response data for debugging
+
+      if (response.status === 200) {
+        console.log("Form data submitted successfully");
+      }
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+    }
+  };
 
   return (
     <div>
       <SubHeader title={"Add Project"} />
       <div className="py-2 px-4">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <label>Title</label>
           <input
             type="text"
@@ -87,6 +112,8 @@ const AddProject = () => {
           ></input>
           <label>Overview</label>
           <textarea
+            name="description"
+            onChange={handleChange}
             rows={6}
             placeholder="Enter small description about your project..."
             className="border-[1px] border-gray-400 rounded-md p-3 w-full"
@@ -124,16 +151,26 @@ const AddProject = () => {
             </div>
           </div>
           <label>Features</label>
-          <RichTextEditor />
+          <div>
+            <ReactQuill
+              className=""
+              onChange={handleFeatureChange}
+              value={value}
+            />
+          </div>
           <label>Frameworks/Libraries Used</label>
           <input
             type="text"
+            name="framework"
+            onChange={handleChange}
             placeholder="Eg : React , Mongoose"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
           ></input>{" "}
           <label>Database Used</label>
           <input
             type="text"
+            name="database"
+            onChange={handleChange}
             placeholder="Eg : MongoDB , NoSQL"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
           ></input>
@@ -152,7 +189,10 @@ const AddProject = () => {
               Upload project zip
             </button>
           </div>
-          <button type="submit" className="mt-2 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md">
+          <button
+            type="submit"
+            className="mt-2 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md"
+          >
             Submit
           </button>
         </form>
