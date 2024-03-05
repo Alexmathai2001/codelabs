@@ -1,11 +1,9 @@
-const Mongoose = require('mongoose')
 const {
 	getStorage,
 	ref,
 	uploadBytes,
 	getDownloadURL,
 } = require("firebase/storage");
-
 
 const firebase = require("firebase/app");
 const { FirebaseError, initializeApp } = require("firebase/app");
@@ -128,6 +126,9 @@ module.exports = {
 		} catch (error) {
 			console.log(error);
 		}
+	},
+	postsignup : async (req,res) => {
+		console.log(req.body);
 	}
 }
 
