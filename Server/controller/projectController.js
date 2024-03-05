@@ -1,5 +1,4 @@
 const Mongoose = require('mongoose')
-const projectModel = require('../models/projectSchema')
 const {
 	getStorage,
 	ref,
@@ -26,7 +25,7 @@ firebase.initializeApp(firebaseConfig);
 
 const storage = getStorage();
 
-
+const projectModel = require('../models/projectSchema.js')
 
 
 module.exports = {
@@ -91,10 +90,23 @@ module.exports = {
 					price: "Free",
 				});
                 newProject.save()
-                console.log(newProject);
+				res.json({
+					result : "success"
+				})
 			});
 		});
-    }
+    },
+
+	getdata : async (req,res) => {
+		try {
+			const projectData = await projectModel.find()
+			res.json(projectData)
+			
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
 }
 
 

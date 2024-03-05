@@ -3,6 +3,7 @@ import SubHeader from "./SubHeader";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom"
 
 const AddProject = () => {
   const [formData, setFormData] = useState({
@@ -20,8 +21,7 @@ const AddProject = () => {
   const [value, setValue] = useState("");
   const [imageArray, setImageArray] = useState("");
   const tempImageArray = [];
-
-  const formDataToSend = new FormData();
+  const navigate = useNavigate()
 
   const handleCoverPhoto = (event) => {
     const coverPhotoFile = event.target.files[0]; // Get the first file
@@ -78,11 +78,12 @@ const AddProject = () => {
 
     try {
       const response = await axios.post("/addproject", formData);
-
+      navigate("/")
       console.log(response); // Check response data for debugging
-
-      if (response.status === 200) {
-        console.log("Form data submitted successfully");
+      if (response.data.result == "success") {
+        console.log("success");
+      }else{
+        console.log("failure");
       }
     } catch (error) {
       console.error("Error submitting form data:", error);
@@ -97,6 +98,7 @@ const AddProject = () => {
           <label>Title</label>
           <input
             type="text"
+            required
             name="title"
             placeholder="Eg : E-rental WebApp"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
@@ -106,6 +108,7 @@ const AddProject = () => {
           <input
             type="text"
             name="category"
+            required
             placeholder="Eg : Full stack"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
             onChange={handleChange}
@@ -122,6 +125,7 @@ const AddProject = () => {
           <input
             type="text"
             name="repoLink"
+            required
             placeholder="Eg : www.sample.com"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
             onChange={handleChange}
@@ -129,6 +133,7 @@ const AddProject = () => {
           <label>Overview</label>
           <textarea
             name="description"
+            required
             onChange={handleChange}
             rows={6}
             placeholder="Enter small description about your project..."
@@ -138,6 +143,7 @@ const AddProject = () => {
             <div className="relative">
               <input
                 type="file"
+                required
                 accept="image/*"
                 onChange={handleImageChange}
                 multiple
@@ -154,6 +160,7 @@ const AddProject = () => {
             <div className="relative">
               <input
                 type="file"
+                required
                 onChange={handleCoverPhoto}
                 accept="image/*"
                 className="absolute inset-0 w-full h-full opacity-0"
@@ -179,6 +186,7 @@ const AddProject = () => {
           <input
             type="text"
             name="framework"
+            required
             onChange={handleChange}
             placeholder="Eg : React , Mongoose"
             className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
@@ -186,6 +194,7 @@ const AddProject = () => {
           <label>Database Used</label>
           <input
             type="text"
+            required
             name="database"
             onChange={handleChange}
             placeholder="Eg : MongoDB , NoSQL"

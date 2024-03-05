@@ -19,5 +19,5 @@ connectdb()
 
 
 app.listen(4000,() =>{
-    console.log("server started at port 5000");
+    console.log("server started at port 4000");
 })
