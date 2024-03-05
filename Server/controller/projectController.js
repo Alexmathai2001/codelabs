@@ -35,6 +35,12 @@ module.exports = {
         let screenshotLinks = []
         let coverPhotoLink = ''
 
+		const currentDate = new Date();
+		const day = currentDate.getDate()
+		const month = currentDate.getMonth()
+		const year = currentDate.getFullYear()
+		const date = `${month}-${day}-${year}`
+
         screenshotList.map((item) => {
 			const file = base64ImageToBlob(item);
 			const storageRef = ref(
@@ -82,8 +88,8 @@ module.exports = {
 					features: features,
 					project_link: repolink,
 					publisher: "rafeeq",
-					published_date: new Date().toLocaleDateString(),
-					last_updated: new Date().toLocaleDateString(),
+					published_date: date,
+					last_updated: date,
 					views: 0,
 					downloads: 0,
 					status: "Pending",
