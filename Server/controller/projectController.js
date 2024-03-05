@@ -37,9 +37,15 @@ module.exports = {
 
 		const currentDate = new Date();
 		const day = currentDate.getDate()
-		const month = currentDate.getMonth()
+		const month = currentDate.getMonth() +1
 		const year = currentDate.getFullYear()
 		const date = `${month}-${day}-${year}`
+
+
+		function generateProjectId() {
+			const timestamp = Date.now();
+			return `ID${timestamp}`;
+		}
 
         screenshotList.map((item) => {
 			const file = base64ImageToBlob(item);
@@ -79,6 +85,7 @@ module.exports = {
 				const newProject = new projectModel({
 					title: title,
 					category: category,
+					project_id: generateProjectId(),
 					live_link: livelink,
 					overview: description,
 					frameworks_used: framework,
@@ -112,6 +119,15 @@ module.exports = {
 			console.log(error);
 		}
 
+	},
+	getDescription : async (req,res) => {
+		try {
+			const projectData = await projectModel.findOne({project_id : req.params.project_id})
+			res.json(projectData)
+			console.log(projectData);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }
 

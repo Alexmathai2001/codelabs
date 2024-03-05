@@ -39,7 +39,7 @@ const Body = () => {
       element : <ForgotPassword />
     },
     {
-      path : '/description',
+      path : '/description/:id',
       element : <Description />
     },
     {

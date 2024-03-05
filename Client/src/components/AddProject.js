@@ -70,7 +70,6 @@ const AddProject = () => {
   const handleFeatureChange = (content) => {
     setValue(content);
     setFormData({ ...formData, features: content });
-    console.log(formData);
   };
 
   const handleSubmit = async (e) => {

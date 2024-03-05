@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SignUpPage = () => {
   return (
@@ -25,7 +26,7 @@ const SignUpPage = () => {
         <input className="w-full py-2 rounded-lg px-2 border-gray-300 border-[1px]" type="Password"></input>
         <button className="bg-[#5429FF] w-full rounded-lg text-white font-semibold py-2 mt-5">Signup</button>
       </form>
-      <p className="mt-8 text-sm text-center">Already have an account? <a href="/" className="text-[#5429FF] font-semibold">Sign in</a></p>
+      <p className="mt-8 text-sm text-center">Already have an account? <Link to={"/signin"} className="text-[#5429FF] font-semibold">Sign in</Link></p>
     </div>
   );
 };

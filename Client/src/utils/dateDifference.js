@@ -56,6 +56,7 @@ export const calcDate = (date1) => {
             days_passed + ' ' + daysTxt[1] : '');
 
     //return the result
+
     return {
         "total_days": Math.round(total_days),
         "total_weeks": Math.round(total_weeks),
