@@ -57,6 +57,10 @@ const Body = () => {
     {
       path : '/addproject',
       element : <AddProject />
+    },
+    {
+      path : '/developerProfile',
+      element : <DeveloperProfile />
     }
   ]);
 

@@ -136,6 +136,10 @@ module.exports = {
 		res.json({
 			status : "success"
 		})
+	},
+	getDevelopersList : async (req,res) => {
+		const developerData = await developerModel.find()
+		res.json(developerData)
 	}
 }
 

@@ -2,12 +2,15 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
+import { useDispatch } from "react-redux";
+import { checkUserSignIn } from "../utils/Slices/userSlice";
 
 const SignInPage = () => {
 
   const [errormsg, setErrormsg] = useState('');
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const email = useRef();
   const password = useRef();
@@ -19,6 +22,7 @@ const SignInPage = () => {
       .then((userCredential) => {
         // Signed in
         navigate('/')
+        dispatch(checkUserSignIn())
         const user = userCredential.user;
         // ...
       })
