@@ -24,6 +24,7 @@ firebase.initializeApp(firebaseConfig);
 const storage = getStorage();
 
 const projectModel = require('../models/projectSchema.js')
+const developerModel = require('../models/developerSchema.js')
 
 
 module.exports = {
@@ -122,13 +123,19 @@ module.exports = {
 		try {
 			const projectData = await projectModel.findOne({project_id : req.params.project_id})
 			res.json(projectData)
-			console.log(projectData);
 		} catch (error) {
 			console.log(error);
 		}
 	},
 	postsignup : async (req,res) => {
-		console.log(req.body);
+		const newProject = new developerModel({
+			dev_name : req.body.fullName,
+			dev_email : req.body.email
+		});
+		newProject.save()
+		res.json({
+			status : "success"
+		})
 	}
 }
 

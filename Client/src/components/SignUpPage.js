@@ -1,36 +1,43 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUpPage = () => {
+
+  const [errormsg,setErrormsg] = useState('')
+
   const fullname = useRef();
   const email = useRef();
   const password = useRef();
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = {
         fullName: fullname.current.value,
-        email: email.current.value,
-        password: password.current.value,
+        email: email.current.value
       };
 
       createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           // Signed up
           const user = userCredential.user;
+          const response = await axios.post('/signup',formData)
+          console.log(response);
+          navigate('/signin')
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
+          setErrormsg(errorMessage)
           // ..
         });
-      axios.post("/signup", formData);
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +77,8 @@ const SignUpPage = () => {
           className="w-full py-2 rounded-lg px-2 border-gray-300 border-[1px]"
           type="Password"
         ></input>
-        <button className="bg-[#5429FF] w-full rounded-lg text-white font-semibold py-2 mt-5">
+        <p className="w-full text-center pt-3 text-sm text-red-500 font-semibold capitalize">{errormsg}</p>
+        <button className="bg-[#5429FF] w-full rounded-lg text-white font-semibold py-2 mt-3">
           Signup
         </button>
       </form>
