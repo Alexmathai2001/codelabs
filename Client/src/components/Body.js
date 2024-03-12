@@ -59,7 +59,7 @@ const Body = () => {
       element : <AddProject />
     },
     {
-      path : '/developerProfile',
+      path : '/developerProfile/:id',
       element : <DeveloperProfile />
     }
   ]);

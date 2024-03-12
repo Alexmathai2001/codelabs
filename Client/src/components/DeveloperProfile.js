@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SubHeader from "./SubHeader";
 import ProfileCard from "./ProfileCard";
 import Domain from "./Domain";
 import ProjectsSection from "./ProjectsSection";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const DeveloperProfile = () => {
+  const {id} = useParams()
+  console.log("developer id is "+id);
+  useEffect(() => {
+    const functionCall = async() => {
+      const developerData = await axios.get('/profile'+id)
+      console.log(developerData);
+    }
+    functionCall()
+  },[])
   return (
     <div>
       <SubHeader title={"Profile"} />

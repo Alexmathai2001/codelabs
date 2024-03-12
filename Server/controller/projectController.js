@@ -128,7 +128,15 @@ module.exports = {
 		}
 	},
 	postsignup : async (req,res) => {
+
+		function generateDevId(prefix = 'DEV_', length = 4){
+			const randomNumber = Array.from({ length }, () => Math.floor(Math.random() * 10)).join('');
+			const uniqueId = prefix + randomNumber;
+			return uniqueId;
+		}
+
 		const newProject = new developerModel({
+			dev_id : generateDevId(),
 			dev_name : req.body.fullName,
 			dev_email : req.body.email
 		});
