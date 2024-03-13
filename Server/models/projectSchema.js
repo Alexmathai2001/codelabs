@@ -11,6 +11,7 @@ const projectSchema = new mongoose.Schema({
   category : String,
   project_link : String,
   publisher : String,
+  publisher_id : String,
   price : String,
   status : String,
   published_date : String,

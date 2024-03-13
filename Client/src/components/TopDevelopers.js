@@ -11,7 +11,6 @@ const TopDevelopers = () => {
   useEffect(() => {
     const developers = async () => {
       const {data} = await axios.get("/getDevelopersList");
-      console.log(data);
       setDev_list(data)
       dispatch(addDevelopersList(data));
     };

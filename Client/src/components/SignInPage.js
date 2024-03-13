@@ -60,13 +60,7 @@ const SignInPage = () => {
           ref={password}
           className="w-full py-2 rounded-lg px-2 border-gray-300 border-[1px]"
           type="Password"
-        ></input>
-        <a
-          className="w-full flex justify-end py-2 font-semibold text-sm text-[#5429FF]"
-          href="/"
-        >
-          Forgot Password?
-        </a>
+        ></input>        
         <p className="w-full text-center text-sm text-red-500 font-semibold">{errormsg}</p>
         <button className="bg-[#5429FF] w-full rounded-lg text-white font-semibold py-2 mt-5">
           Sign in

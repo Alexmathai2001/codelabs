@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 const ProjectsSection = ({title}) => {
 
   const projectData = useSelector((store) => store?.project?.ProjectData)
-  const lastTwoProjects = projectData?.slice(-2).reverse()
 
   return (
     <div>
@@ -13,7 +12,7 @@ const ProjectsSection = ({title}) => {
             <p >{title}</p>
             <a className='text-blue-500' href='www.sample.com'>more</a>
         </div>
-        {lastTwoProjects?.map((project,index) => (<ProjectCard data={project} key={index}/>))}
+        {projectData?.map((project,index) => (<ProjectCard data={project} key={index}/>))}
     </div>
   )
 }

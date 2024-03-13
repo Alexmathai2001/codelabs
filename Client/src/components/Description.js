@@ -21,7 +21,6 @@ const Description = () => {
 		}
           getProjectData();
     },[])
-    console.log(description);
 
   return (
     <div className='px-4 bg-[#F5F5F5]'>

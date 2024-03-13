@@ -93,7 +93,8 @@ module.exports = {
 					thumbnail: coverPhotoLink,
 					features: features,
 					project_link: repolink,
-					publisher: "rafeeq",
+					publisher: "alex mathai",
+					publisher_id : "fake",
 					published_date: date,
 					last_updated: date,
 					views: 0,
@@ -148,6 +149,11 @@ module.exports = {
 	getDevelopersList : async (req,res) => {
 		const developerData = await developerModel.find()
 		res.json(developerData)
+	},
+	getdevInfo : async (req,res) => {
+		const dev_details = await developerModel.find({dev_id : req.params.dev_id})
+		const dev_projects = await projectModel.find({publisher_id : req.params.dev_id})
+		res.json({ dev_details: dev_details, dev_projects: dev_projects })
 	}
 }
 

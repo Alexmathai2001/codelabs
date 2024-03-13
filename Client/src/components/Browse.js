@@ -14,7 +14,7 @@ const Browse = () => {
   useEffect(() => {
     const call = async () => {
       const dataList = await axios.get("/getdata");
-      dispatch(addProjectData(dataList.data));
+      dispatch(addProjectData(dataList.data.slice(-2).reverse()));
     };
 
     call();
