@@ -16,8 +16,8 @@ const projectSchema = new mongoose.Schema({
   status : String,
   published_date : String,
   last_updated : String,
-  db_used : String,
-  frameworks_used : String,
+  db_used : Array,
+  tech_used : Array,
   views : Number,
   downloads : Number
 })

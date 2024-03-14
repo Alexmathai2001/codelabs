@@ -81,20 +81,23 @@ module.exports = {
 					repolink,
 				} = req.body;
 
+				const techused = framework.split(',')
+				const databases = database.split(',')
+
 				const newProject = new projectModel({
 					title: title,
 					category: category,
 					project_id: generateProjectId(),
 					live_link: livelink,
 					overview: description,
-					frameworks_used: framework,
-					db_used: database,
+					tech_used: techused,
+					db_used: databases,
 					screenshots: screenshotLinks,
 					thumbnail: coverPhotoLink,
 					features: features,
 					project_link: repolink,
 					publisher: "alex mathai",
-					publisher_id : "fake",
+					publisher_id : "DEV_6628",
 					published_date: date,
 					last_updated: date,
 					views: 0,
