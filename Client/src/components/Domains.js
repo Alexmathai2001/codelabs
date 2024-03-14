@@ -9,7 +9,7 @@ const Domains = () => {
         <SubHeader title={"Domains"} />
         <div className='px-3'>
             <Search />
-            <Domain />
+            <Domain stacks={[]}/>
         </div>
     </div>
   )

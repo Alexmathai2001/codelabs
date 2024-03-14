@@ -18,8 +18,8 @@ const SpecificationCard = ({data}) => {
                 <td className='w-1/2 text-center'>{data?.last_updated}</td>
             </tr>
             <tr>
-                <td className='w-1/2 text-center py-2'>FrameWork / Languages</td>
-                <td className='w-1/2 text-center'>{data?.frameworks_used}</td>
+                <td className='w-1/2 text-center py-2'>Tech Stacks Used</td>
+                <td className='w-1/2 text-center'>{data?.tech_used.join(', ')}</td>
             </tr>
             <tr>
                 <td className='w-1/2 text-center py-2'>Database</td>

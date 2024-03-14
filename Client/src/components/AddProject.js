@@ -4,8 +4,10 @@ import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
+import { techLibrary } from "../utils/techLibrary";
 
 const AddProject = () => {
+  console.log(techLibrary);
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -74,8 +76,6 @@ const AddProject = () => {
         }
       };
       reader.readAsDataURL(file);
-
-      console.log(imageArray);
     });
   };
 
@@ -209,15 +209,16 @@ const AddProject = () => {
               <option value="" disabled>
                 Select your Stacks
               </option>
-              <option selected disabled>select</option>
-              <option value="React">React</option>
-              <option value="Node">Node</option>
-              <option value="Express">Express</option>
-              <option value="Tailwind">Tailwind</option>
-              <option value="Bootstrap">Bootstrap</option>
-              <option value="Redux">Redux</option>
-              <option value="Mongoose">Mongoose</option>
-              <option value="AWS">AWS</option>
+              <option selected disabled>
+                select
+              </option>
+              {techLibrary.map((data, index) => {
+                return (
+                  <option key={index} value={data.name}>
+                    {data.name}
+                  </option>
+                );
+              })}
             </select>
 
             <div className="selected-tech-stacks flex w-full flex-wrap gap-2">
@@ -239,8 +240,8 @@ const AddProject = () => {
                     class=" text-white rounded-full h-6 w-6"
                   >
                     <span class="material-symbols-outlined text-white ">
-close
-</span>
+                      close
+                    </span>
                   </button>
                 </div>
               ))}

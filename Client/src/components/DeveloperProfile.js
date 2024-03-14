@@ -11,12 +11,14 @@ import { addProjectData } from "../utils/Slices/projectSlice";
 const DeveloperProfile = () => {
   const {id} = useParams()
   const [developerInfo,setDeveloperInfo] = useState(null)
+  const [stacks,setStacks] = useState([])
   const dispatch = useDispatch()
   useEffect(() => {
     const functionCall = async() => {
       const response = await axios.get('/profile/'+id)
-      const {dev_details,dev_projects} = response.data
+      const {dev_details,dev_projects,tech_used} = response.data
       setDeveloperInfo(dev_details[0])
+      setStacks(tech_used)
       dispatch(addProjectData(dev_projects))
     }
     functionCall()
@@ -41,8 +43,8 @@ const DeveloperProfile = () => {
         </div>
       </div>
       <div className="mt-2 px-3">
-        <p>Tech stacks Known (5)</p>
-        <Domain />
+        <p>Tech stacks Known ({stacks.length})</p>
+        <Domain stacks={stacks}/>
         <ProjectsSection title={"Projects"} />
       </div>
     </div>

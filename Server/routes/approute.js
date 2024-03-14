@@ -11,6 +11,7 @@ router.get('/description/:project_id',projectController.getDescription)
 router.post('/signup',projectController.postsignup)
 router.get('/getDevelopersList',projectController.getDevelopersList)
 router.get('/profile/:dev_id',projectController.getdevInfo)
+router.get('/getFullDomains',projectController.getFullDomains)
 
 
 

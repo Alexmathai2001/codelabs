@@ -16,7 +16,8 @@ const Description = () => {
     useEffect(() => {
         const getProjectData = async () => {
 			await axios.get("/description/" + id).then((res) => {
-				setDescription(res?.data);				
+				setDescription(res?.data);	
+                console.log(res?.data);			
 			});
 		}
           getProjectData();
