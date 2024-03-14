@@ -70,18 +70,18 @@ module.exports = {
 			console.log("Uploaded file!");
 			getDownloadURL(snapshot.ref).then((item) => {
 				coverPhotoLink = item;
+				console.log(req.body);
 				const {
 					title,
 					category,
 					livelink,
                     description,
-					framework,
+					tech_used,
 					database,
 					features,
 					repolink,
 				} = req.body;
 
-				const techused = framework.split(',')
 				const databases = database.split(',')
 
 				const newProject = new projectModel({
@@ -90,14 +90,14 @@ module.exports = {
 					project_id: generateProjectId(),
 					live_link: livelink,
 					overview: description,
-					tech_used: techused,
+					tech_used: tech_used,
 					db_used: databases,
 					screenshots: screenshotLinks,
 					thumbnail: coverPhotoLink,
 					features: features,
 					project_link: repolink,
-					publisher: "alex mathai",
-					publisher_id : "DEV_6628",
+					publisher: "ausni",
+					publisher_id : "DEV_3075",
 					published_date: date,
 					last_updated: date,
 					views: 0,
@@ -156,6 +156,7 @@ module.exports = {
 	getdevInfo : async (req,res) => {
 		const dev_details = await developerModel.find({dev_id : req.params.dev_id})
 		const dev_projects = await projectModel.find({publisher_id : req.params.dev_id})
+		console.log(dev_projects);
 		res.json({ dev_details: dev_details, dev_projects: dev_projects })
 	}
 }

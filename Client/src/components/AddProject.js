@@ -3,7 +3,7 @@ import SubHeader from "./SubHeader";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const AddProject = () => {
   const [formData, setFormData] = useState({
@@ -12,37 +12,53 @@ const AddProject = () => {
     livelink: "",
     features: "",
     description: "",
-    framework: "",
+    tech_used: [],
     database: "",
     screenshots: "",
-    coverPhoto : "",
-    repoLink : ""
+    coverPhoto: "",
+    repoLink: "",
   });
   const [value, setValue] = useState("");
   const [imageArray, setImageArray] = useState("");
+  const [selectedTechStacks, setSelectedTechStacks] = useState([]);
   const tempImageArray = [];
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const handleSelectChange = (event) => {
+    const selectedStack = event.target.value;
+    if (
+      selectedStack !== "" &&
+      !selectedTechStacks.includes(event.target.value)
+    ) {
+      setSelectedTechStacks((prevTechStacks) => [
+        ...prevTechStacks,
+        selectedStack,
+      ]);
+
+      console.log(selectedTechStacks);
+    }
+  };
 
   const handleCoverPhoto = (event) => {
     const coverPhotoFile = event.target.files[0]; // Get the first file
-  
+
     if (coverPhotoFile instanceof Blob) {
       const reader = new FileReader();
-  
+
       reader.onload = () => {
         if (reader.readyState === FileReader.DONE) {
           setImageArray([reader.result]); // Set the image array with the cover photo data
           setFormData({ ...formData, coverPhoto: reader.result }); // Set formData with the cover photo data
         }
       };
-  
+
       // Read the cover photo file
       reader.readAsDataURL(coverPhotoFile);
     } else {
       console.error("Invalid file:", coverPhotoFile);
     }
   };
-  
+
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     files.forEach((file) => {
@@ -76,12 +92,14 @@ const AddProject = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/addproject", formData);
-      navigate("/")
+      //setFormData({ ...formData, tech_used: selectedTechStacks});
+      const postdata = { ...formData, tech_used: selectedTechStacks };
+      const response = await axios.post("/addproject", postdata);
+      navigate("/");
       console.log(response); // Check response data for debugging
       if (response.data.result == "success") {
         console.log("success");
-      }else{
+      } else {
         console.log("failure");
       }
     } catch (error) {
@@ -181,15 +199,53 @@ const AddProject = () => {
               value={value}
             />
           </div>
-          <label>Frameworks/Libraries Used</label>
-          <input
-            type="text"
-            name="framework"
-            required
-            onChange={handleChange}
-            placeholder="Eg : React , Mongoose"
-            className="py-2 px-2 w-full border-[1px] border-gray-400 rounded-md mb-2"
-          ></input>{" "}
+          <div className="my-2">
+            <label>Tech-Stack Used</label>
+            <select
+              name="tech_used"
+              onChange={handleSelectChange}
+              className="block w-full bg-white py-2 border-2 border-gray-400"
+            >
+              <option value="" disabled>
+                Select your Stacks
+              </option>
+              <option selected disabled>select</option>
+              <option value="React">React</option>
+              <option value="Node">Node</option>
+              <option value="Express">Express</option>
+              <option value="Tailwind">Tailwind</option>
+              <option value="Bootstrap">Bootstrap</option>
+              <option value="Redux">Redux</option>
+              <option value="Mongoose">Mongoose</option>
+              <option value="AWS">AWS</option>
+            </select>
+
+            <div className="selected-tech-stacks flex w-full flex-wrap gap-2">
+              {selectedTechStacks.map((stack, index) => (
+                <div
+                  id={index}
+                  class="flex bg-blue-600 my-2 rounded-full p-1 pl-3 w-max gap-2 h-max"
+                >
+                  <div>
+                    <span class="text-white">{stack}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      selectedTechStacks.splice(index, 1);
+                      setSelectedTechStacks([...selectedTechStacks]);
+                    }}
+                    type="button"
+                    id="new+button"
+                    class=" text-white rounded-full h-6 w-6"
+                  >
+                    <span class="material-symbols-outlined text-white ">
+close
+</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
           <label>Database Used</label>
           <input
             type="text"
