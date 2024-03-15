@@ -4,6 +4,7 @@ const projectSchema = new mongoose.Schema({
   title:String,
   project_id: String,
   overview: String,
+  keywords : String,
   screenshots:[String],
   features : String,
   thumbnail : String,

@@ -5,6 +5,8 @@ const {
   getDownloadURL,
 } = require("firebase/storage");
 
+const openai = require("../utils/openAI.js")
+
 const firebase = require("firebase/app");
 const { FirebaseError, initializeApp } = require("firebase/app");
 
@@ -54,6 +56,8 @@ module.exports = {
         console.log("uploaded");
         getDownloadURL(snapshot.ref).then((item) => {
           screenshotLinks.push(item);
+
+          
         });
       });
     });
@@ -66,7 +70,7 @@ module.exports = {
 
     uploadBytes(storageRef, file).then((snapshot) => {
       console.log("Uploaded file!");
-      getDownloadURL(snapshot.ref).then((item) => {
+      getDownloadURL(snapshot.ref).then(async (item) => {
         coverPhotoLink = item;
         console.log(req.body);
         const {
@@ -80,6 +84,25 @@ module.exports = {
           repolink,
         } = req.body;
 
+        //openai
+        const response = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content:
+                "You will be provided with a block of text, and your task is to extract a list of keywords from it. it will be given as comma seperated values..example task,new,store",
+            },
+            {
+              role: "user",
+              content: description,
+            },
+          ],
+          temperature: 0.5,
+          max_tokens: 64,
+          top_p: 1,
+        });
+
         const databases = database.split(",");
 
         const newProject = new projectModel({
@@ -88,14 +111,15 @@ module.exports = {
           project_id: generateProjectId(),
           live_link: livelink,
           overview: description,
+          keywords : title.split(" ").join(",")+","+tech_used+","+response?.choices[0]?.message?.content,
           tech_used: tech_used,
           db_used: databases,
           screenshots: screenshotLinks,
           thumbnail: coverPhotoLink,
           features: features,
           project_link: repolink,
-          publisher: "ausni",
-          publisher_id: "DEV_3075",
+          publisher: "Alex mathai",
+          publisher_id: "DEV_6628",
           published_date: date,
           last_updated: date,
           views: 0,
