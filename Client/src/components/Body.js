@@ -11,6 +11,7 @@ import DeveloperProfile from "./DeveloperProfile";
 import Myprofile from "./Myprofile";
 import EditProfile from "./EditProfile";
 import AddProject from "./AddProject";
+import Searchresults from "./Searchresults";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -61,6 +62,10 @@ const Body = () => {
     {
       path : '/developerProfile/:id',
       element : <DeveloperProfile />
+    },
+    {
+      path : '/search/:search_key',
+      element : <Searchresults />
     }
   ]);
 

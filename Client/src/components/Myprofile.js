@@ -1,5 +1,6 @@
 import React from "react";
 import SubHeader from "./SubHeader";
+import { Link } from "react-router-dom";
 
 const Myprofile = () => {
   return (
@@ -9,9 +10,9 @@ const Myprofile = () => {
         <img src="/asset/profile-picture.png" className="w-20"></img>
         <p className="font-semibold text-gray-700 mt-1">Alex Mathai</p>
         <p className="text-xs text-gray-600 py-1">Web Developer</p>
-        <button className="w-2/5 py-3 rounded-full bg-[#5429FF] text-white font-semibold mt-2 text-sm">
+        <Link to={"/editprofile"} className="w-2/5 py-3 rounded-full bg-[#5429FF] text-white font-semibold mt-2 text-sm flex justify-center">
           Edit Profile
-        </button>
+        </Link>
       </div>
       <div>
         <div className=" bg-white m-5 p-5 rounded-lg ">

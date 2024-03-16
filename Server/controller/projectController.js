@@ -190,11 +190,14 @@ module.exports = {
   },
   getFullDomains : async (req,res) => {
 	const allProjects = await projectModel.find()
-	console.log("hello")
 	const techUsedSet = new Set(allProjects.flatMap(project => project.tech_used.map(tech => tech.toLowerCase())));
 	const fulltechStack = Array.from(techUsedSet);
 	res.json(fulltechStack)
 
+  },
+  getSearch : async (req,res) => {
+    const searchdata = await projectModel.find({keywords : { $regex : new RegExp(req.params.search_id , "i")}})
+    res.json(searchdata)
   }
 };
 

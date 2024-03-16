@@ -12,7 +12,7 @@ const Header = () => {
         <Link to={"/signin"}>
           <img className="w-6" alt="favorites" src="/asset/favorites.png" />
         </Link>
-        <Link to={"/signin"}>
+        <Link to={"/myprofile"}>
           <img className="w-6" alt="account" src="/asset/account.png" />
         </Link>
       </div>
