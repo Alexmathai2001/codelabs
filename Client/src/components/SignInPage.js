@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { checkUserSignIn } from "../utils/Slices/userSlice";
+import axios from "axios";
 
 const SignInPage = () => {
 
@@ -24,6 +25,7 @@ const SignInPage = () => {
         navigate('/')
         dispatch(checkUserSignIn())
         const user = userCredential.user;
+        const response = axios.post('/login',{email:email.current.value})
         // ...
       })
       .catch((error) => {

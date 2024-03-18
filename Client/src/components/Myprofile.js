@@ -1,25 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SubHeader from "./SubHeader";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Myprofile = () => {
+
+  const[devinfo,setDevinfo] = useState([])
+
+  useEffect(()=> {
+
+    const call = async () => {
+      const {data} = await axios.get('/getdevprofile') //object destructuring
+      setDevinfo(data[0])
+      console.log(devinfo);
+    }
+    call()
+    
+
+  },[])
+
   return (
     <div className="bg-slate-100 h-screen">
       <SubHeader title={"My Profile"} />
       <div className="w-full bg-slate-50 mt-2 p-4 flex flex-col justify-center items-center">
         <img src="/asset/profile-picture.png" className="w-20"></img>
-        <p className="font-semibold text-gray-700 mt-1">Alex Mathai</p>
-        <p className="text-xs text-gray-600 py-1">Web Developer</p>
+        <p className="font-semibold text-gray-700 mt-1">{devinfo.dev_name}</p>
+        <p className="text-xs text-gray-600 py-1">{devinfo.dev_role}</p>
         <Link to={"/editprofile"} className="w-2/5 py-3 rounded-full bg-[#5429FF] text-white font-semibold mt-2 text-sm flex justify-center">
           Edit Profile
         </Link>
       </div>
       <div>
         <div className=" bg-white m-5 p-5 rounded-lg ">
-          <div className="flex gap-2 border-[1px] border-gray-300 p-3 rounded-lg my-2">
+          <Link to={'/myprojects'} className="flex gap-2 border-[1px] border-gray-300 p-3 rounded-lg my-2">
             <img src="/asset/project.png" className="w-6"></img>
             <p>My Projects</p>
-          </div>
+          </Link>
           <div className="flex gap-2 border-[1px] border-gray-300 p-3 rounded-lg my-2">
             <img src="/asset/contact.png" className="w-6"></img>
             <p>Contact Us</p>

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const projectController = require('../controller/projectController')
+const userController = require('../controller/userController')
 
 
 
@@ -13,6 +14,11 @@ router.get('/getDevelopersList',projectController.getDevelopersList)
 router.get('/profile/:dev_id',projectController.getdevInfo)
 router.get('/getFullDomains',projectController.getFullDomains)
 router.get('/search/:search_id',projectController.getSearch)
+router.get('/myprojects',projectController.getmyproject)
+
+
+router.post('/login',userController.login)
+router.get('/getdevprofile',userController.getdevprofile)
 
 
 

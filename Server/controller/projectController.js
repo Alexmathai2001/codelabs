@@ -198,6 +198,13 @@ module.exports = {
   getSearch : async (req,res) => {
     const searchdata = await projectModel.find({keywords : { $regex : new RegExp(req.params.search_id , "i")}})
     res.json(searchdata)
+  },
+  getmyproject : async (req,res) => {
+    const devinfo = await developerModel.findOne({dev_email : req.session.user})
+    const devid = devinfo.dev_id
+    const myprojectinfo = await projectModel.find({publisher_id : devid})
+    console.log(myprojectinfo);
+    res.json(myprojectinfo)
   }
 };
 
