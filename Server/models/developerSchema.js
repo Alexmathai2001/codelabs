@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const developerSchema = new mongoose.Schema({
     dev_id : String,
     dev_name : String,
+    dev_role : String,
     dev_email : String,
     dev_bio : String,
     profile_picture : String

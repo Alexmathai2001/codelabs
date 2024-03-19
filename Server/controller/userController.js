@@ -15,5 +15,10 @@ module.exports = {
         const dev_info = await developerModel.find({dev_id : req.params.dev_id})
         console.log(dev_info)
         res.json(dev_info)
+    },
+    editdev : async (req,res) => {
+        console.log(req.body)
+        await developerModel.findOneAndUpdate({dev_id : req.body.dev_id},{dev_name:req.body.dev_name,dev_role:req.body.dev_role,dev_bio : req.body.dev_bio})
+        res.json()
     }
 }

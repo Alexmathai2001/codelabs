@@ -22,6 +22,7 @@ router.post('/editproject',projectController.posteditproject)
 router.post('/login',userController.login)
 router.get('/getdevprofile',userController.getdevprofile)
 router.get('/deveditinfo/:dev_id',userController.getdevinfo)
+router.post('/posteditdev',userController.editdev)
 
 
 

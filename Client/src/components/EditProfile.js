@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SubHeader from "./SubHeader";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditProfile = () => {
   const { id } = useParams();
   const [devinfo, setDevinfo] = useState();
+  const navigate = useNavigate()
   useEffect(() => {
     const call = async () => {
       console.log(id);
@@ -19,14 +20,15 @@ const EditProfile = () => {
       });
     };
     call();
-    console.log(devinfo)
   }, []);
 
   const handlechange = (e) => {
     setDevinfo({...devinfo, [e.target.name]: e.target.value})
   }
 
-  const handlesubmit = () => {
+  const handlesubmit = async(e) => {
+    e.preventDefault()
+    await axios.post("/posteditdev",devinfo)
     
   }
 
