@@ -26,7 +26,7 @@ const Myprofile = () => {
         <img src="/asset/profile-picture.png" className="w-20"></img>
         <p className="font-semibold text-gray-700 mt-1">{devinfo.dev_name}</p>
         <p className="text-xs text-gray-600 py-1">{devinfo.dev_role}</p>
-        <Link to={"/editprofile"} className="w-2/5 py-3 rounded-full bg-[#5429FF] text-white font-semibold mt-2 text-sm flex justify-center">
+        <Link to={"/editprofile/"+devinfo.dev_id} className="w-2/5 py-3 rounded-full bg-[#5429FF] text-white font-semibold mt-2 text-sm flex justify-center">
           Edit Profile
         </Link>
       </div>

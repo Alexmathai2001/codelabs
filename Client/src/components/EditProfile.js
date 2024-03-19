@@ -1,9 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubHeader from "./SubHeader";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const EditProfile = () => {
+  const { id } = useParams();
+  const [devinfo, setDevinfo] = useState();
+  useEffect(() => {
+    const call = async () => {
+      console.log(id);
+      const { data } = await axios.get("/deveditinfo/" + id);
+      setDevinfo({
+        dev_id : data[0]?.dev_id,
+        dev_name : data[0]?.dev_name,
+        dev_email : data[0]?.dev_email,
+        dev_bio : data[0]?.dev_bio,
+        dev_role : data[0]?.dev_role
+      });
+    };
+    call();
+    console.log(devinfo)
+  }, []);
 
+  const handlechange = (e) => {
+    setDevinfo({...devinfo, [e.target.name]: e.target.value})
+  }
+
+  const handlesubmit = () => {
+    
+  }
 
   return (
     <div>
@@ -32,14 +57,36 @@ const EditProfile = () => {
             <img src="/asset/profile-user.png"></img>
           </div>
         </div>
-        <form>
-            <label className="font-light my-2">Full Name</label>
-            <input type="text" className="w-full border-[1px] border-gray-400 rounded-md mb-2 py-2 px-2"></input>
-            <label className=" font-light">Headline</label>
-            <input type="text" placeholder="Eg : Web Developer" className="w-full border-[1px] border-gray-400 rounded-md mb-2 py-2 px-2"></input>
-            <label className=" font-light">Bio</label>
-            <textarea rows={10} placeholder="Eg : I'm a passionate web developer and designer with 7 years of experience crafting engaging and user-friendly websites. " className="border-[1px] border-gray-400 rounded-md w-full p-3"></textarea>
-        <button className="mt-16 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md">Save</button>
+        <form onSubmit={handlesubmit}>
+          <label className="font-light my-2">Full Name</label>
+          <input
+          onChange={handlechange}
+            type="text"
+            name="dev_name"
+            value={devinfo?.dev_name}
+            className="w-full border-[1px] border-gray-400 rounded-md mb-2 py-2 px-2"
+          ></input>
+          <label className=" font-light">Headline</label>
+          <input
+            type="text"
+            onChange={handlechange}
+            name="dev_role"
+            value={devinfo?.dev_role}
+            placeholder="Eg : Web Developer"
+            className="w-full border-[1px] border-gray-400 rounded-md mb-2 py-2 px-2"
+          ></input>
+          <label className=" font-light">Bio</label>
+          <textarea
+            rows={10}
+            onChange={handlechange}
+            name="dev_bio"
+            value={devinfo?.dev_bio}
+            placeholder="Eg : I'm a passionate web developer and designer with 7 years of experience crafting engaging and user-friendly websites. "
+            className="border-[1px] border-gray-400 rounded-md w-full p-3"
+          ></textarea>
+          <button className="mt-16 w-full py-3 bg-[#5429FF] text-white font-semibold rounded-md">
+            Save
+          </button>
         </form>
       </div>
     </div>

@@ -54,7 +54,7 @@ const Body = () => {
       element : <Myprofile />
     },
     {
-      path : '/editprofile',
+      path : '/editprofile/:id',
       element : <EditProfile />
     },
     {

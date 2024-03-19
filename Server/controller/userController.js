@@ -9,5 +9,11 @@ module.exports = {
         const userinfo = await developerModel.find({dev_email : req.session.user})
         res.json(userinfo)
         console.log(userinfo);
+    },
+    getdevinfo : async (req,res) => {
+        console.log(req.params.dev_id)
+        const dev_info = await developerModel.find({dev_id : req.params.dev_id})
+        console.log(dev_info)
+        res.json(dev_info)
     }
 }
