@@ -31,7 +31,7 @@ const Description = () => {
             <div className='h-6 px-2 py-[2px] bg-green-200 text-green-600 text-sm'>Free</div>
         </div>
         <div className='flex justify-between mt-2'>
-            <p className='text-xs text-gray-500 uppercase'>{description?.publisher}</p>
+            <p className='text-xs alex text-gray-500 uppercase'>{description?.publisher}</p>
             <div className='flex gap-2'>
                 <img className='w-4 h-4' src='/asset/clock.png'></img>
                 <p className='text-xs text-gray-500'>{calcDate(description?.published_date).result || "New"}</p>
