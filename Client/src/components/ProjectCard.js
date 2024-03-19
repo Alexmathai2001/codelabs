@@ -51,11 +51,17 @@ const ProjectCard = ({ data }) => {
 export default ProjectCard;
 
 export const MyProjectCard = (Card) => {
+
+  const navigate = useNavigate()
+
+  const onClickHandler = ({project_id}) => {
+    navigate('/editproject/'+project_id)
+  }
   return (props) => {
     return (
       <div className="relative">
         <button
-        //   onClick={() => onClickHandler(props?.data?.project_id)}
+           onClick={() => onClickHandler(props?.data)}
           className="absolute top-0 right-0 flex items-center gap-2 p-1 bg-gray-200 px-2 rounded-bl-xl"
         >
           <i class="bi bi-pen text-gray-800 text-xs"></i>

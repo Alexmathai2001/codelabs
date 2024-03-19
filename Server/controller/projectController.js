@@ -205,6 +205,30 @@ module.exports = {
     const myprojectinfo = await projectModel.find({publisher_id : devid})
     console.log(myprojectinfo);
     res.json(myprojectinfo)
+  },
+  geteditprojectinfo : async(req,res) => {
+    const projectinfo = await projectModel.find({project_id : req.params.projectid})
+    res.json(projectinfo)
+  },
+  posteditproject : async (req,res) => {
+    console.log(req.body)
+    await projectModel.findOneAndUpdate(
+      { project_id: req.body.project_id },
+      {
+        title: req.body.title,
+        category: req.body.category,
+        live_link: req.body.livelink,
+        features: req.body.features,
+        description: req.body.description,
+        db_used: req.body.db_used // Include db_used in the update object
+      },
+      { 
+        new: true // Return the updated document
+      }
+    );
+    
+    
+    res.json()
   }
 };
 

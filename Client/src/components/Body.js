@@ -13,6 +13,7 @@ import EditProfile from "./EditProfile";
 import AddProject from "./AddProject";
 import Searchresults from "./Searchresults";
 import MyProjects from "./MyProjects";
+import EditProject from "./EditProject";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -71,6 +72,10 @@ const Body = () => {
     {
       path : '/myprojects',
       element : <MyProjects />
+    },
+    {
+      path : '/editproject/:id',
+      element : <EditProject />
     }
   ]);
 
