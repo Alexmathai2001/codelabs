@@ -56,7 +56,7 @@ module.exports = {
         console.log("uploaded");
         getDownloadURL(snapshot.ref).then((item) => {
           screenshotLinks.push(item);
-
+          
           
         });
       });

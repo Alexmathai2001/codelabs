@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import SubHeader from "./SubHeader"
 import ProjectsSection from "./ProjectsSection"
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { addProjectData } from '../utils/Slices/projectSlice'
+import Search from './Search'
 
 const Searchresults = () => {
-
+    const location = useLocation()
     const {search_key} = useParams()
     const dispatch = useDispatch()
     useEffect(() => {
@@ -18,11 +19,12 @@ const Searchresults = () => {
         }
         call()
 
-    },[search_key])
+    },[location.pathname])
 
   return (
     <div>
         <SubHeader title={"Results"}/>
+        <Search />
         <div className='px-3 py-4'>
             <ProjectsSection title={"projects"}/>
         </div>
