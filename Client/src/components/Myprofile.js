@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react";
 import SubHeader from "./SubHeader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "universal-cookie"
 
 const Myprofile = () => {
 
   const[devinfo,setDevinfo] = useState([])
+  const navigate = useNavigate()
+  const cookies = new Cookies()
 
   useEffect(()=> {
+
+    const isAuth = cookies.get("token")
+      if(!isAuth ) {
+        return navigate('/signin')
+      }
 
     const call = async () => {
       const {data} = await axios.get('/getdevprofile') //object destructuring
       setDevinfo(data[0])
       console.log(devinfo);
     }
+
     call()
+
     
 
   },[])

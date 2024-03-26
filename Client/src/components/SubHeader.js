@@ -5,7 +5,7 @@ const SubHeader = ({ title }) => {
         window.history.back();
   }
   return (
-    <div className="flex justify-between px-4 py-2 h-14 items-center bg-r[F5F5F5] border border-b-2">
+    <div className="flex bg-white justify-between px-4 py-2 h-14 items-center bg-r[F5F5F5] border border-b-2">
       <div className="flex">
         <button onClick={backButton}>
           <img className="w-6" alt="logo" src="/asset/next.png"></img>

@@ -1,13 +1,15 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { checkUserSignIn } from "../utils/Slices/userSlice";
 import axios from "axios";
+import Cookies from "universal-cookie"
 
 const SignInPage = () => {
 
+  const cookies = new Cookies()
   const [errormsg, setErrormsg] = useState('');
 
   const navigate = useNavigate()
@@ -20,12 +22,12 @@ const SignInPage = () => {
     e.preventDefault();
 
     signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-      .then((userCredential) => {
-        // Signed in
+      .then(async (userCredential) => {
         navigate('/')
         dispatch(checkUserSignIn())
         const user = userCredential.user;
-        const response = axios.post('/login',{email:email.current.value})
+        const {data} = axios.post('/login',{email:email.current.value})
+        cookies.set("token",data.token,{path:"/"})
         // ...
       })
       .catch((error) => {
@@ -33,7 +35,15 @@ const SignInPage = () => {
         const errorMessage = error.message;
         setErrormsg(errorMessage)
       });
+
   };
+
+  useEffect(() => {
+    const isAuth = cookies.get("token")
+    if(isAuth && isAuth!== undefined) {
+      return navigate('/')
+    }
+  },[])
 
   return (
     <div className="px-3">

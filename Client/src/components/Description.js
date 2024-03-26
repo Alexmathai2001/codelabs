@@ -6,23 +6,25 @@ import SpecificationCard from "./SpecificationCard";
 import ProfileCard from "./ProfileCard";
 import ProjectsSection from "./ProjectsSection";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { calcDate } from "../utils/dateDifference";
 import ScreenshotCarousel from "./ScreenshotCarousel";
 
 const Description = () => {
+  const location = useLocation()
   const [description, setDescription] = useState(null);
   const { id } = useParams();
   const [ssvisible, setSSVisible] = useState(false);
 
   useEffect(() => {
+    window.scroll(0,0)
     const getProjectData = async () => {
       await axios.get("/description/" + id).then((res) => {
         setDescription(res?.data);
       });
     };
     getProjectData();
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className="px-4 bg-[#F5F5F5]">

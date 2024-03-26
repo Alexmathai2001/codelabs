@@ -152,8 +152,24 @@ module.exports = {
         project_id: req.params.project_id,
       });
       const views = projectData?.views + 1;
+
+
+      if (!req.session.viewed_posts) {
+				req.session.viewed_posts = {};
+			}
+			if (!req.session.viewed_posts[req.params.project_id]) {
+				req.session.viewed_posts[req.params.project_id] = 1;
+				//update session
+				//increment post count in posts table with post id
+				//update 'viewed_posts' column with new session
+				const update = await projectModel.findOneAndUpdate(
+					{ project_id: req.params.project_id },
+					{ views: views }
+				);
+			}
+
+
       console.log("hello")
-      await projectModel.findOneAndUpdate({project_id : req.params.project_id},{views : views})
       res.json(projectData);
     } catch (error) {
       console.log(error);

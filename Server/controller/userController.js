@@ -1,9 +1,15 @@
-const developerModel = require('../models/developerSchema')
+const developerModel = require('../models/developerSchema');
+const { createSecretToken } = require('../utils/secretToken');
 
 module.exports = {
     login : (req,res) => {
         req.session.user = req.body.email
-        res.json()
+        const token = createSecretToken(req.body.email);
+			res.cookie("token", token, {
+				withCredentials: true,
+				httpOnly: false,
+			});
+        res.json({token : token})
     },
     getdevprofile : async (req,res) => {
         const userinfo = await developerModel.find({dev_email : req.session.user})

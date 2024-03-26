@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubHeader from "./SubHeader";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import { techLibrary } from "../utils/techLibrary";
+import Cookies from "universal-cookie";
 
 const AddProject = () => {
   console.log(techLibrary);
@@ -25,6 +26,8 @@ const AddProject = () => {
   const [selectedTechStacks, setSelectedTechStacks] = useState([]);
   const tempImageArray = [];
   const navigate = useNavigate();
+  const cookies = new Cookies()
+
 
   const handleSelectChange = (event) => {
     const selectedStack = event.target.value;
@@ -106,6 +109,13 @@ const AddProject = () => {
       console.error("Error submitting form data:", error);
     }
   };
+
+  useEffect(() => {
+    const isAuth = cookies.get("token")
+      if(!isAuth ) {
+        return navigate('/signin')
+      }
+  },[])
 
   return (
     <div>
