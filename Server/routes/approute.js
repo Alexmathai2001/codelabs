@@ -19,6 +19,7 @@ router.get('/search/:search_id',auth,projectController.getSearch)
 router.get('/myprojects',auth,authVerify,projectController.getmyproject)
 router.get('/geteditprojectinfo/:projectid',auth,authVerify,projectController.geteditprojectinfo)
 router.post('/editproject',auth,authVerify,projectController.posteditproject)
+router.get('/getallprojects',auth,projectController.getallprojects)
 
 
 router.post('/login',auth,userController.login)

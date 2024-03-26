@@ -1,6 +1,7 @@
 import React from 'react'
 import ProjectCard from './ProjectCard'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const ProjectsSection = ({title}) => {
 
@@ -10,7 +11,7 @@ const ProjectsSection = ({title}) => {
     <div>
         <div className='w-full py-1  text-sm flex justify-between'>
             <p >{title}</p>
-            <a className='text-blue-500' href='www.sample.com'>more</a>
+            <Link className='text-blue-500' to={"/allprojects"}>more</Link>
         </div>
         {projectData?.map((project,index) => (<ProjectCard data={project} key={index}/>))}
     </div>

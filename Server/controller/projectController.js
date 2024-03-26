@@ -286,6 +286,10 @@ module.exports = {
 
     res.json();
   },
+  getallprojects :async (req,res) => {
+    const data = await projectModel.find()
+    res.json(data)
+  }
 };
 
 function base64ImageToBlob(str) {
