@@ -212,7 +212,25 @@ module.exports = {
     );
     const techUsedArray = Array.from(techUsedSet);
 
+    const user = await projectModel.aggregate([
+      {
+        $match: {
+          publisher_id: req.params.dev_id,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalViews: { $sum: "$views" },
+          projectsCount: { $sum: 1 },
+        },
+      },
+    ]);
+
+
     res.json({
+      total_views : user[0]?.totalViews || 0,
+      total_project : user[0]?.projectsCount || 0,
       dev_details: dev_details,
       dev_projects: dev_projects,
       tech_used: techUsedArray,

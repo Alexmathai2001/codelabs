@@ -12,12 +12,17 @@ const DeveloperProfile = () => {
   const {id} = useParams()
   const [developerInfo,setDeveloperInfo] = useState(null)
   const [stacks,setStacks] = useState([])
+  const [totalViews,setTotalViews] = useState(null)
+  const [totalProject,setTotalProject] = useState(null)
   const dispatch = useDispatch()
   useEffect(() => {
     const functionCall = async() => {
       const response = await axios.get('/profile/'+id)
-      const {dev_details,dev_projects,tech_used} = response.data
+      console.log(response.data)
+      const {dev_details,dev_projects,tech_used,total_views,total_project} = response.data
       setDeveloperInfo(dev_details[0])
+      setTotalViews(total_views)
+      setTotalProject(total_project)
       setStacks(tech_used)
       dispatch(addProjectData(dev_projects))
     }
@@ -34,11 +39,11 @@ const DeveloperProfile = () => {
         <div className="flex justify-center w-full gap-[1px] text-white font-semibold text-sm mt-3">
             <button className="bg-[#5429FF] w-2/5 py-3 rounded-s-md flex gap-2 justify-center">
                 <img src="/asset/laptop.png" className="w-5"></img>
-                <p>Projects</p>
+                { totalProject && <p>{totalProject} Projects</p>}
             </button>
             <button className="bg-[#5429FF] w-2/5 py-3 rounded-e-md flex gap-2 justify-center items-center">
                 <img src="/asset/eye-white.png" className="w-5"></img>
-                <p>Views</p>
+                <p>{totalViews} Views</p>
             </button>
         </div>
       </div>
