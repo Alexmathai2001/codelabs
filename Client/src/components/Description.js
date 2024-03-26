@@ -19,7 +19,6 @@ const Description = () => {
     const getProjectData = async () => {
       await axios.get("/description/" + id).then((res) => {
         setDescription(res?.data);
-        console.log(res?.data);
       });
     };
     getProjectData();

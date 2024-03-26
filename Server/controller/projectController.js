@@ -5,7 +5,7 @@ const {
   getDownloadURL,
 } = require("firebase/storage");
 
-const openai = require("../utils/openAI.js")
+const openai = require("../utils/openAI.js");
 
 const firebase = require("firebase/app");
 const { FirebaseError, initializeApp } = require("firebase/app");
@@ -56,8 +56,6 @@ module.exports = {
         console.log("uploaded");
         getDownloadURL(snapshot.ref).then((item) => {
           screenshotLinks.push(item);
-          
-          
         });
       });
     });
@@ -111,7 +109,12 @@ module.exports = {
           project_id: generateProjectId(),
           live_link: livelink,
           overview: description,
-          keywords : title.split(" ").join(",")+","+tech_used+","+response?.choices[0]?.message?.content,
+          keywords:
+            title.split(" ").join(",") +
+            "," +
+            tech_used +
+            "," +
+            response?.choices[0]?.message?.content,
           tech_used: tech_used,
           db_used: databases,
           screenshots: screenshotLinks,
@@ -148,6 +151,9 @@ module.exports = {
       const projectData = await projectModel.findOne({
         project_id: req.params.project_id,
       });
+      const views = projectData?.views + 1;
+      console.log("hello")
+      await projectModel.findOneAndUpdate({project_id : req.params.project_id},{views : views})
       res.json(projectData);
     } catch (error) {
       console.log(error);
@@ -183,35 +189,52 @@ module.exports = {
     const dev_projects = await projectModel.find({
       publisher_id: req.params.dev_id,
     });
-    const techUsedSet = new Set(dev_projects.flatMap(project => project.tech_used.map(tech => tech.toLowerCase())));
-	const techUsedArray = Array.from(techUsedSet);
+    const techUsedSet = new Set(
+      dev_projects.flatMap((project) =>
+        project.tech_used.map((tech) => tech.toLowerCase())
+      )
+    );
+    const techUsedArray = Array.from(techUsedSet);
 
-    res.json({ dev_details: dev_details, dev_projects: dev_projects,tech_used : techUsedArray });
+    res.json({
+      dev_details: dev_details,
+      dev_projects: dev_projects,
+      tech_used: techUsedArray,
+    });
   },
-  getFullDomains : async (req,res) => {
-	const allProjects = await projectModel.find()
-	const techUsedSet = new Set(allProjects.flatMap(project => project.tech_used.map(tech => tech.toLowerCase())));
-	const fulltechStack = Array.from(techUsedSet);
-	res.json(fulltechStack)
-
+  getFullDomains: async (req, res) => {
+    const allProjects = await projectModel.find();
+    const techUsedSet = new Set(
+      allProjects.flatMap((project) =>
+        project.tech_used.map((tech) => tech.toLowerCase())
+      )
+    );
+    const fulltechStack = Array.from(techUsedSet);
+    res.json(fulltechStack);
   },
-  getSearch : async (req,res) => {
-    const searchdata = await projectModel.find({keywords : { $regex : new RegExp(req.params.search_id , "i")}})
-    res.json(searchdata)
+  getSearch: async (req, res) => {
+    const searchdata = await projectModel.find({
+      keywords: { $regex: new RegExp(req.params.search_id, "i") },
+    });
+    res.json(searchdata);
   },
-  getmyproject : async (req,res) => {
-    const devinfo = await developerModel.findOne({dev_email : req.session.user})
-    const devid = devinfo.dev_id
-    const myprojectinfo = await projectModel.find({publisher_id : devid})
+  getmyproject: async (req, res) => {
+    const devinfo = await developerModel.findOne({
+      dev_email: req.session.user,
+    });
+    const devid = devinfo.dev_id;
+    const myprojectinfo = await projectModel.find({ publisher_id: devid });
     console.log(myprojectinfo);
-    res.json(myprojectinfo)
+    res.json(myprojectinfo);
   },
-  geteditprojectinfo : async(req,res) => {
-    const projectinfo = await projectModel.find({project_id : req.params.projectid})
-    res.json(projectinfo)
+  geteditprojectinfo: async (req, res) => {
+    const projectinfo = await projectModel.find({
+      project_id: req.params.projectid,
+    });
+    res.json(projectinfo);
   },
-  posteditproject : async (req,res) => {
-    console.log(req.body)
+  posteditproject: async (req, res) => {
+    console.log(req.body);
     await projectModel.findOneAndUpdate(
       { project_id: req.body.project_id },
       {
@@ -220,16 +243,15 @@ module.exports = {
         live_link: req.body.livelink,
         features: req.body.features,
         description: req.body.description,
-        db_used: req.body.db_used // Include db_used in the update object
+        db_used: req.body.db_used, // Include db_used in the update object
       },
-      { 
-        new: true // Return the updated document
+      {
+        new: true, // Return the updated document
       }
     );
-    
-    
-    res.json()
-  }
+
+    res.json();
+  },
 };
 
 function base64ImageToBlob(str) {
