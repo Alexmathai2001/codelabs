@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# codelabs
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The CodeLab project aims to create a platform for developers and creators to showcase their projects with screenshots and feature highlights similar to GitHub, but with a more visually appealing and user-friendly interface.
 
 ## Available Scripts
 
