@@ -2,11 +2,24 @@
 
 The CodeLab project aims to create a platform for developers and creators to showcase their projects with screenshots and feature highlights similar to GitHub, but with a more visually appealing and user-friendly interface.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+Install CodeLab with npm
 
-### `npm start`
+```bash
+  git clone https://github.com/Alexmathai2001/codelabs.git
+  cd /Server
+  npm install
+  npm run start
+
+```
+
+```bash
+  cd /Client
+  npm install
+  npm start
+
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
